@@ -35,14 +35,25 @@ function App() {
   const rows = 10;
   const columns = 10;
 
-  let board = new Array(10);
+  let initialBoard = new Array(10);
 
   for (let row = 0; row < rows; row++) {
-    board[row] = new Array(columns).fill("unknown");
+    initialBoard[row] = new Array(columns).fill("unknown");
   }
 
+  const [board, updateBoard] = useState(initialBoard);
+
   const onClick = (row, column) => {
-    console.log("clicked", row, column);
+    updateBoard(board => {
+      const newBoard = []
+
+      board.forEach((row) => {
+        return newBoard.push([...row]);
+      })
+
+      newBoard[row][column] = "clicked";
+      return newBoard;
+    })
   };
 
   return (
