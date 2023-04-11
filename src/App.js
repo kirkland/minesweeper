@@ -2,18 +2,30 @@ import { useState } from "react";
 import "./App.css";
 
 function Cell(props) {
-  const { state } = props;
+  const { state, row, column, onClick } = props;
 
-  return <div className={`cell cell-${state}`} />;
+  const clickHandler = (event) => {
+    onClick(row, column);
+  }
+
+  return (
+    <div className={`cell cell-${state}`} onClick={clickHandler} />
+  );
 }
 
 function Row(props) {
-  const { row } = props;
+  const { row, rowIndex, onClick } = props;
 
   return (
     <div className="row">
-      {row.map((cell, index) => (
-        <Cell state={cell} key={index} />
+      {row.map((cell, column) => (
+        <Cell
+          state={cell}
+          key={column}
+          row={rowIndex}
+          column={column}
+          onClick={onClick}
+        />
       ))}
     </div>
   );
@@ -29,10 +41,14 @@ function App() {
     board[row] = new Array(columns).fill("unknown");
   }
 
+  const onClick = (row, column) => {
+    console.log("clicked", row, column);
+  };
+
   return (
     <div className="board">
-      {board.map((row, index) => (
-        <Row row={row} key={index} />
+      {board.map((row, rowIndex) => (
+        <Row row={row} key={rowIndex} rowIndex={rowIndex} onClick={onClick} />
       ))}
     </div>
   );
