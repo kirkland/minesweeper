@@ -35,11 +35,7 @@ function App() {
   const rows = 10;
   const columns = 10;
 
-  let initialBoard = new Array(10);
-
-  for (let row = 0; row < rows; row++) {
-    initialBoard[row] = new Array(columns).fill("unknown");
-  }
+  const initialBoard = new Array(rows).fill(new Array(columns).fill("unknown"));
 
   const [board, updateBoard] = useState(initialBoard);
 
