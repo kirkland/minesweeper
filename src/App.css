@@ -18,8 +18,8 @@ td.cell {
   width: 40px;
 }
 
-td.cell-bomb {
-  /* background-color: aquamarine; */
+td.cell-revealed-bomb {
+  background-color: aquamarine;
 }
 
 td.cell-revealed {

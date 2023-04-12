@@ -9,8 +9,10 @@ export default function Cell(props) {
 
   if (state.revealed) {
     cellClass = "cell-revealed";
-  } else if (state.bomb) {
-    cellClass = "cell-bomb";
+
+    if (state.bomb) {
+      cellClass = "cell-revealed-bomb";
+    }
   }
 
   return (
