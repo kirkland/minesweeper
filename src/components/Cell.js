@@ -3,7 +3,7 @@ export default function Cell(props) {
 
   const clickHandler = (event) => {
     onClick(row, column);
-  }
+  };
 
   let cellClass = "";
 
@@ -14,6 +14,8 @@ export default function Cell(props) {
   }
 
   return (
-    <div className={`cell ${cellClass}`} onClick={clickHandler} />
+    <div className={`cell ${cellClass}`} onClick={clickHandler}>
+      {state.adjacentBombs}
+    </div>
   );
 }
