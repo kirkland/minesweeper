@@ -2,13 +2,32 @@ import { useState } from "react";
 
 import Row from "./Row";
 
+const initializeBoard = (rows, columns, bombs) => {
+  console.log("initializeBoard");
+
+  let board = [];
+
+  for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
+    board.push(new Array(columns).fill("unknown"));
+  }
+
+  for (let i = 0; i <= bombs; i++) {
+    const bombRow = Math.floor(Math.random() * rows);
+    const bombColumn = Math.floor(Math.random() * columns);
+
+    board[bombRow][bombColumn] = "bomb";
+  }
+
+  console.log(board);
+  return board;
+};
+
 export default function Board(props) {
-  const rows = 10;
-  const columns = 10;
+  const rows = 9;
+  const columns = 9;
+  const bombs = 10;
 
-  const initialBoard = new Array(rows).fill(new Array(columns).fill("unknown"));
-
-  const [board, updateBoard] = useState(initialBoard);
+  const [board, updateBoard] = useState(initializeBoard(rows, columns, bombs));
 
   const onClick = (row, column) => {
     updateBoard((board) => {
@@ -30,4 +49,4 @@ export default function Board(props) {
       ))}
     </div>
   );
-};
+}
