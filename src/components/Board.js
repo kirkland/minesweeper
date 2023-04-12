@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Row from "./Row";
-import BoardState from "../board-state";
+import { cloneBoard, createInitialBoard, reveal } from "../board-state";
 
 export default function Board(props) {
   const rows = 9;
@@ -9,14 +9,14 @@ export default function Board(props) {
   const bombs = 10;
 
   const [board, updateBoard] = useState(
-    BoardState.createInitialBoard(rows, columns, bombs).board
+    createInitialBoard(rows, columns, bombs)
   );
 
   const onClick = (row, column) => {
     updateBoard((board) => {
-      const boardState = new BoardState(board);
-      boardState.reveal(row, column);
-      return boardState.board;
+      const newBoard = cloneBoard(board);
+      reveal(board, row, column);
+      return newBoard;
     });
   };
 
