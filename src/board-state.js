@@ -60,10 +60,20 @@ export const createInitialBoard = (rowsCount, columnsCount, bombs) => {
     board.push(row);
   }
 
-  for (let i = 0; i <= bombs; i++) {
-    const bombRow = Math.floor(Math.random() * rowsCount);
-    const bombColumn = Math.floor(Math.random() * columnsCount);
-    board[bombRow][bombColumn].bomb = true;
+  for (let i = 0; i < bombs; i++) {
+    let bombRow;
+    let bombColumn;
+
+    while (true) {
+      bombRow = Math.floor(Math.random() * rowsCount);
+      bombColumn = Math.floor(Math.random() * columnsCount);
+
+      if (!board[bombRow][bombColumn].bomb) {
+        board[bombRow][bombColumn].bomb = true;
+        break
+      }
+    }
+
     setAdjacentBombs(board, bombRow, bombColumn);
   }
 
@@ -73,46 +83,51 @@ export const createInitialBoard = (rowsCount, columnsCount, bombs) => {
 export const gameLost = (board) => {
   let lost = false;
 
-  board.forEach(row => {
-    row.forEach(cell => {
+  board.forEach((row) => {
+    row.forEach((cell) => {
       if (cell.bomb && cell.revealed) {
         lost = true;
       }
-    })
-  })
+    });
+  });
 
   return lost;
-}
+};
 
 export const gameWon = (board) => {
   let won = true;
 
-  board.forEach(row => {
-    row.forEach(cell => {
+  board.forEach((row) => {
+    row.forEach((cell) => {
       if (!cell.revealed && !cell.bomb) {
         won = false;
       }
-    })
-  })
+    });
+  });
 
   return won;
-}
+};
 
-export const reveal = (board, row, column) => {
-  const cell = board[row][column];
+export const flag = (board, row, column) => {
+  const newBoard = cloneBoard(board);
+  newBoard[row][column].flagged = !newBoard[row][column].flagged;
+  return newBoard;
+};
+
+export const reveal = (board, row, column, clone = true) => {
+  const newBoard = clone ? cloneBoard(board) : board;
+  const cell = newBoard[row][column];
   cell.revealed = true;
 
-  if (cell.bomb) {
-    // Game lost
-  } else {
-    if (cell.adjacentBombs === 0) {
-      adjacentCells(board, row, column).forEach((coordinates) => {
-        if (!board[coordinates[0]][coordinates[1]].revealed) {
-          reveal(board, ...coordinates);
-        }
-      });
-    }
+  if (cell.adjacentBombs === 0) {
+    adjacentCells(newBoard, row, column).forEach((coordinates) => {
+      if (!newBoard[coordinates[0]][coordinates[1]].revealed) {
+        reveal(newBoard, ...coordinates, false);
+      }
+    });
   }
+
+  return newBoard;
 };
 
 const setAdjacentBombs = (board, bombRow, bombColumn) => {

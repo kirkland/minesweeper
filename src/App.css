@@ -18,6 +18,10 @@ td.cell {
   width: 40px;
 }
 
+td.cell-flagged {
+  background-color: brown;
+}
+
 td.cell-revealed-bomb {
   background-color: aquamarine;
 }

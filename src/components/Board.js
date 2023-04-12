@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import Row from "./Row";
 import {
-  cloneBoard,
   createInitialBoard,
+  flag,
   gameLost,
   gameWon,
   reveal,
@@ -18,11 +18,13 @@ export default function Board(props) {
     createInitialBoard(rows, columns, bombs)
   );
 
-  const onClick = (row, column) => {
+  const onClick = (button, row, column) => {
     updateBoard((board) => {
-      const newBoard = cloneBoard(board);
-      reveal(newBoard, row, column);
-      return newBoard;
+      if (button === "left") {
+        return reveal(board, row, column);
+      } else if (button === "right") {
+        return flag(board, row, column);
+      }
     });
   };
 

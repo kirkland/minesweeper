@@ -2,10 +2,18 @@ export default function Cell(props) {
   const { state, row, column, onClick } = props;
 
   const clickHandler = (event) => {
-    onClick(row, column);
+    event.preventDefault();
+
+    const button = event.type === "click" ? "left" : "right";
+
+    onClick(button, row, column);
   };
 
   let cellClass = "";
+
+  if (state.flagged) {
+    cellClass = "cell-flagged";
+  }
 
   if (state.revealed) {
     cellClass = "cell-revealed";
@@ -16,7 +24,11 @@ export default function Cell(props) {
   }
 
   return (
-    <td className={`cell ${cellClass}`} onClick={clickHandler}>
+    <td
+      className={`cell ${cellClass}`}
+      onClick={clickHandler}
+      onContextMenu={clickHandler}
+    >
       {state.revealed && state.adjacentBombs}
     </td>
   );
