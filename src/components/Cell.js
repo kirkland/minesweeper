@@ -19,7 +19,7 @@ export default function Cell(props) {
     cellClass = "cell-revealed";
 
     if (state.bomb) {
-      cellClass = "cell-revealed-bomb";
+      cellClass += " cell-revealed-bomb";
     }
   }
 
@@ -29,7 +29,9 @@ export default function Cell(props) {
       onClick={clickHandler}
       onContextMenu={clickHandler}
     >
-      {state.revealed && state.adjacentBombs}
+      <div className="content-holder">
+        {state.revealed && state.adjacentBombs}
+      </div>
     </td>
   );
 }

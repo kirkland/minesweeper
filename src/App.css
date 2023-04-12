@@ -1,6 +1,6 @@
 table.board {
-  margin-left: 50px;
-  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
   border-collapse: collapse;
 }
 
@@ -14,6 +14,8 @@ td.cell {
   font-size: 26px;
   height: 40px;
   text-align: center;
+  overflow: hidden;
+  position: relative;
   vertical-align: middle;
   width: 40px;
 }
@@ -22,10 +24,29 @@ td.cell-flagged {
   background-color: brown;
 }
 
-td.cell-revealed-bomb {
+td.cell-revealed .content-holder {
+  align-items: center;
+  animation-duration: 1s;
+  animation-name: slidein;
+  background-color: lightgray;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+td.cell-revealed-bomb .content-holder {
   background-color: aquamarine;
 }
 
-td.cell-revealed {
-  background-color: lightgray;
+@keyframes slidein {
+  from {
+    top: -40px;
+  }
+
+  to {
+    top: 0px;
+  }
 }
