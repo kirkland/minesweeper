@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Row from "./Row";
+import BoardState from "../board-state";
 
 const setAdjacentBombs = (board, coordinates) => {
   const rows = board.length;
@@ -81,7 +82,11 @@ export default function Board(props) {
   const columns = 9;
   const bombs = 10;
 
-  const [board, updateBoard] = useState(initializeBoard(rows, columns, bombs));
+  // const [board, updateBoard] = useState(initializeBoard(rows, columns, bombs));
+
+  const [board, updateBoard] = useState(
+    BoardState.createInitialBoard(rows, columns, bombs).board
+  );
 
   const onClick = (row, column) => {
     updateBoard((board) => {
