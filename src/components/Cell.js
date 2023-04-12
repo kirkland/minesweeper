@@ -5,7 +5,15 @@ export default function Cell(props) {
     onClick(row, column);
   }
 
+  let cellClass = "";
+
+  if (state.revealed) {
+    cellClass = "cell-revealed";
+  } else if (state.bomb) {
+    cellClass = "cell-bomb";
+  }
+
   return (
-    <div className={`cell cell-${state}`} onClick={clickHandler} />
+    <div className={`cell ${cellClass}`} onClick={clickHandler} />
   );
 }

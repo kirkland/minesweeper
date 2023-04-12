@@ -5,6 +5,7 @@
 }
 
 .cell {
+  background-color: gray;
   border-color: black;
   border-style: solid;
   float: left;
@@ -12,10 +13,10 @@
   width: 40px;
 }
 
-.cell-unknown, .cell-bomb {
-  background-color: gray;
+.cell-bomb {
+  background-color: aquamarine;
 }
 
-.cell-clicked {
+.cell-revealed {
   background-color: blueviolet;
 }
