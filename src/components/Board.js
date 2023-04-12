@@ -14,18 +14,31 @@ export default function Board(props) {
   const columns = 9;
   const bombs = 10;
 
+  const revealCells = (cells) => {
+    updateBoard((board) => {
+      let newBoard;
+
+      cells.forEach(coordinates => {
+        const [row, column] = coordinates;
+        newBoard = reveal(board, row, column);
+      });
+
+      return newBoard;
+    });
+  };
+
   const [board, updateBoard] = useState(
     createInitialBoard(rows, columns, bombs)
   );
 
   const onClick = (button, row, column) => {
-    updateBoard((board) => {
-      if (button === "left") {
-        return reveal(board, row, column);
-      } else if (button === "right") {
+    if (button === "left") {
+      revealCells([[row, column]]);
+    } else {
+      updateBoard((board) => {
         return flag(board, row, column);
-      }
-    });
+      })
+    }
   };
 
   return (
