@@ -35,13 +35,6 @@ export default class BoardState {
     return this.board[row][column];
   }
 
-  // Oops, this is probably not necessary
-  setCell(row, column, newState) {
-    Object.keys(newState).forEach((key) => {
-      this.board[row][column][key] = newState[key];
-    });
-  }
-
   setAdjacentBombs(bombRow, bombColumn) {
     [
       [1, 1],
@@ -65,11 +58,7 @@ export default class BoardState {
       ) {
         const adjacentCell = this.cell(adjacentRow, adjacentColumn);
 
-        // adjacentCell.adjacentBombs = adjacentCell.adjacentBombs + 1;
-
-        this.setCell(adjacentRow, adjacentColumn, {
-          adjacentBombs: adjacentCell.adjacentBombs + 1,
-        });
+        adjacentCell.adjacentBombs = adjacentCell.adjacentBombs + 1
       }
     });
   }
