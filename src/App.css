@@ -19,9 +19,9 @@ td.cell {
 }
 
 td.cell-bomb {
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
 }
 
 td.cell-revealed {
-  background-color: blueviolet;
+  background-color: lightgray;
 }
