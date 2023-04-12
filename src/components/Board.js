@@ -18,11 +18,11 @@ export default function Board(props) {
   const revealCells = (cells) => {
     updateBoard((board) => {
       let nextRevealed = [];
-      let newBoard = cloneBoard(board);
+      const newBoard = cloneBoard(board);
 
-      cells.forEach((coordinates, i) => {
+      cells.forEach((coordinates) => {
         const [row, column] = coordinates;
-        nextRevealed = nextRevealed.concat(reveal(board, row, column));
+        nextRevealed = nextRevealed.concat(reveal(newBoard, row, column));
       });
 
       if (nextRevealed.length > 0) {
