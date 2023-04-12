@@ -10,18 +10,22 @@ tr {
 
 td.cell {
   background-color: gray;
-  border: 1px black solid;
+  border: 1px rgb(48, 137, 121) solid;
   font-size: 26px;
   height: 40px;
-  text-align: center;
   overflow: hidden;
   position: relative;
+  text-align: center;
   vertical-align: middle;
   width: 40px;
 }
 
 td.cell-flagged {
   background-color: brown;
+}
+
+td .content-holder {
+  left: 0;
 }
 
 td.cell-revealed .content-holder {
