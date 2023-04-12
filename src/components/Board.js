@@ -15,7 +15,7 @@ export default function Board(props) {
   const onClick = (row, column) => {
     updateBoard((board) => {
       const newBoard = cloneBoard(board);
-      reveal(board, row, column);
+      reveal(newBoard, row, column);
       return newBoard;
     });
   };
