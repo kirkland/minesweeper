@@ -15,7 +15,7 @@ export default function Cell(props) {
 
   return (
     <div className={`cell ${cellClass}`} onClick={clickHandler}>
-      {state.adjacentBombs}
+      {state.revealed && state.adjacentBombs}
     </div>
   );
 }
