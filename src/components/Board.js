@@ -3,23 +3,6 @@ import { useState } from "react";
 import Row from "./Row";
 import BoardState from "../board-state";
 
-const cloneBoard = (board) => {
-  const newBoard = [];
-
-  board.forEach((row) => {
-    const newRow = [];
-
-    row.forEach((cell) => {
-      const newCell = Object.assign({}, cell);
-      newRow.push(newCell);
-    });
-
-    newBoard.push(newRow);
-  });
-
-  return newBoard;
-};
-
 export default function Board(props) {
   const rows = 9;
   const columns = 9;
@@ -31,9 +14,9 @@ export default function Board(props) {
 
   const onClick = (row, column) => {
     updateBoard((board) => {
-      const newBoard = cloneBoard(board);
-      newBoard[row][column].revealed = true;
-      return newBoard;
+      const boardState = new BoardState(board);
+      boardState.reveal(row, column);
+      return boardState.board;
     });
   };
 

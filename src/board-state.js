@@ -1,6 +1,19 @@
 export default class BoardState {
   constructor(board) {
-    this.board = board;
+    const newBoard = [];
+
+    board.forEach((row) => {
+      const newRow = [];
+
+      row.forEach((cell) => {
+        const newCell = Object.assign({}, cell);
+        newRow.push(newCell);
+      });
+
+      newBoard.push(newRow);
+    });
+
+    this.board = newBoard;
     this.rows = board.length;
     this.columns = board[0].length;
   }
@@ -35,6 +48,10 @@ export default class BoardState {
     return this.board[row][column];
   }
 
+  reveal(row, column) {
+    this.cell(row, column).revealed = true;
+  }
+
   setAdjacentBombs(bombRow, bombColumn) {
     [
       [1, 1],
@@ -58,7 +75,7 @@ export default class BoardState {
       ) {
         const adjacentCell = this.cell(adjacentRow, adjacentColumn);
 
-        adjacentCell.adjacentBombs = adjacentCell.adjacentBombs + 1
+        adjacentCell.adjacentBombs = adjacentCell.adjacentBombs + 1;
       }
     });
   }
