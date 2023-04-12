@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Row from "./Row";
 import {
+  cloneBoard,
   createInitialBoard,
   flag,
   gameLost,
@@ -16,12 +17,19 @@ export default function Board(props) {
 
   const revealCells = (cells) => {
     updateBoard((board) => {
-      let newBoard;
+      let nextRevealed = [];
+      let newBoard = cloneBoard(board);
 
-      cells.forEach(coordinates => {
+      cells.forEach((coordinates, i) => {
         const [row, column] = coordinates;
-        newBoard = reveal(board, row, column);
+        nextRevealed = nextRevealed.concat(reveal(board, row, column));
       });
+
+      if (nextRevealed.length > 0) {
+        setTimeout(() => {
+          revealCells(nextRevealed);
+        }, 100);
+      }
 
       return newBoard;
     });
@@ -37,7 +45,7 @@ export default function Board(props) {
     } else {
       updateBoard((board) => {
         return flag(board, row, column);
-      })
+      });
     }
   };
 

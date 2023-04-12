@@ -114,20 +114,20 @@ export const flag = (board, row, column) => {
   return newBoard;
 };
 
-export const reveal = (board, row, column, clone = true) => {
-  const newBoard = clone ? cloneBoard(board) : board;
+export const reveal = (newBoard, row, column, clone = true) => {
   const cell = newBoard[row][column];
   cell.revealed = true;
+  const nextRevealed = [];
 
-  if (cell.adjacentBombs === 0) {
+  if (!cell.bomb && cell.adjacentBombs === 0) {
     adjacentCells(newBoard, row, column).forEach((coordinates) => {
       if (!newBoard[coordinates[0]][coordinates[1]].revealed) {
-        reveal(newBoard, ...coordinates, false);
+        nextRevealed.push(coordinates);
       }
     });
   }
 
-  return newBoard;
+  return nextRevealed;
 };
 
 const setAdjacentBombs = (board, bombRow, bombColumn) => {
