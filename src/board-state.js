@@ -69,6 +69,35 @@ export const createInitialBoard = (rowsCount, columnsCount, bombs) => {
 
   return board;
 };
+
+export const gameLost = (board) => {
+  let lost = false;
+
+  board.forEach(row => {
+    row.forEach(cell => {
+      if (cell.bomb && cell.revealed) {
+        lost = true;
+      }
+    })
+  })
+
+  return lost;
+}
+
+export const gameWon = (board) => {
+  let won = true;
+
+  board.forEach(row => {
+    row.forEach(cell => {
+      if (!cell.revealed && !cell.bomb) {
+        won = false;
+      }
+    })
+  })
+
+  return won;
+}
+
 export const reveal = (board, row, column) => {
   const cell = board[row][column];
   cell.revealed = true;

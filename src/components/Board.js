@@ -1,7 +1,13 @@
 import { useState } from "react";
 
 import Row from "./Row";
-import { cloneBoard, createInitialBoard, reveal } from "../board-state";
+import {
+  cloneBoard,
+  createInitialBoard,
+  gameLost,
+  gameWon,
+  reveal,
+} from "../board-state";
 
 export default function Board(props) {
   const rows = 9;
@@ -21,12 +27,21 @@ export default function Board(props) {
   };
 
   return (
-    <table className="board">
-      <tbody>
-        {board.map((row, rowIndex) => (
-          <Row row={row} key={rowIndex} rowIndex={rowIndex} onClick={onClick} />
-        ))}
-      </tbody>
-    </table>
+    <>
+      {gameLost(board) && <p>Sorry, you lost.</p>}
+      {gameWon(board) && <p>Hurray, you won!</p>}
+      <table className="board">
+        <tbody>
+          {board.map((row, rowIndex) => (
+            <Row
+              row={row}
+              key={rowIndex}
+              rowIndex={rowIndex}
+              onClick={onClick}
+            />
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 }
