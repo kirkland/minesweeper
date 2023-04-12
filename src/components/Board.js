@@ -3,8 +3,6 @@ import { useState } from "react";
 import Row from "./Row";
 
 const initializeBoard = (rows, columns, bombs) => {
-  console.log("initializeBoard");
-
   let board = [];
 
   for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
@@ -18,7 +16,6 @@ const initializeBoard = (rows, columns, bombs) => {
     board[bombRow][bombColumn] = "bomb";
   }
 
-  console.log(board);
   return board;
 };
 

@@ -12,7 +12,7 @@
   width: 40px;
 }
 
-.cell-unknown {
+.cell-unknown, .cell-bomb {
   background-color: gray;
 }
 
