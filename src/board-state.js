@@ -44,16 +44,8 @@ export default class BoardState {
     return boardState;
   }
 
-  cell(row, column) {
-    return this.board[row][column];
-  }
-
-  reveal(row, column) {
-    this.cell(row, column).revealed = true;
-  }
-
-  setAdjacentBombs(bombRow, bombColumn) {
-    [
+  adjacentCells(row, column) {
+    return [
       [1, 1],
       [1, 0],
       [1, -1],
@@ -62,21 +54,50 @@ export default class BoardState {
       [-1, 1],
       [-1, 0],
       [-1, -1],
-    ].forEach((offsets) => {
-      const [rowOffset, columnOffset] = offsets;
-      const adjacentRow = bombRow + rowOffset;
-      const adjacentColumn = bombColumn + columnOffset;
+    ]
+      .map((offsets) => {
+        const [rowOffset, columnOffset] = offsets;
+        const adjacentRow = row + rowOffset;
+        const adjacentColumn = column + columnOffset;
 
-      if (
-        0 <= adjacentRow &&
-        adjacentRow < this.rows &&
-        0 <= adjacentColumn &&
-        adjacentColumn < this.columns
-      ) {
-        const adjacentCell = this.cell(adjacentRow, adjacentColumn);
+        if (
+          0 <= adjacentRow &&
+          adjacentRow < this.rows &&
+          0 <= adjacentColumn &&
+          adjacentColumn < this.columns
+        ) {
+          return [adjacentRow, adjacentColumn];
+        }
 
-        adjacentCell.adjacentBombs = adjacentCell.adjacentBombs + 1;
+        return null;
+      })
+      .filter((x) => x);
+  }
+
+  cell(row, column) {
+    return this.board[row][column];
+  }
+
+  reveal(row, column) {
+    const cell = this.cell(row, column);
+    cell.revealed = true;
+
+    if (!cell.bomb) {
+      if (cell.adjacentBombs === 0) {
+        this.adjacentCells(row, column).forEach((coordinates) => {
+          if (!this.cell(...coordinates).revealed) {
+            this.reveal(...coordinates);
+          }
+        });
       }
+    }
+  }
+
+  setAdjacentBombs(bombRow, bombColumn) {
+    this.adjacentCells(bombRow, bombColumn).forEach((coordinates) => {
+      const [adjacentRow, adjacentColumn] = coordinates;
+      const adjacentCell = this.cell(adjacentRow, adjacentColumn);
+      adjacentCell.adjacentBombs = adjacentCell.adjacentBombs + 1;
     });
   }
 }
