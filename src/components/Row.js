@@ -4,7 +4,7 @@ export default function Row(props) {
   const { row, rowIndex, onClick } = props;
 
   return (
-    <div className="row">
+    <tr className="row">
       {row.map((cell, column) => (
         <Cell
           state={cell}
@@ -14,6 +14,6 @@ export default function Row(props) {
           onClick={onClick}
         />
       ))}
-    </div>
+    </tr>
   );
 }

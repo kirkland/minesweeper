@@ -1,22 +1,27 @@
-.board {
-  display: grid;
+table.board {
   margin-left: 50px;
   margin-top: 50px;
+  border-collapse: collapse;
 }
 
-.cell {
+tr {
+  vertical-align: middle;
+}
+
+td.cell {
   background-color: gray;
-  border-color: black;
-  border-style: solid;
-  float: left;
+  border: 1px black solid;
+  font-size: 26px;
   height: 40px;
+  text-align: center;
+  vertical-align: middle;
   width: 40px;
 }
 
-.cell-bomb {
+td.cell-bomb {
   background-color: aquamarine;
 }
 
-.cell-revealed {
+td.cell-revealed {
   background-color: blueviolet;
 }

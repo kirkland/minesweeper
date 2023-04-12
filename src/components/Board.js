@@ -21,10 +21,12 @@ export default function Board(props) {
   };
 
   return (
-    <div className="board">
-      {board.map((row, rowIndex) => (
-        <Row row={row} key={rowIndex} rowIndex={rowIndex} onClick={onClick} />
-      ))}
-    </div>
+    <table className="board">
+      <tbody>
+        {board.map((row, rowIndex) => (
+          <Row row={row} key={rowIndex} rowIndex={rowIndex} onClick={onClick} />
+        ))}
+      </tbody>
+    </table>
   );
 }
