@@ -1,16 +1,9 @@
 import { useState } from "react";
 
 import Row from "./Row";
-import {
-  cloneBoard,
-  createInitialBoard,
-  flag,
-  gameLost,
-  gameWon,
-  reveal,
-} from "../board-state";
+import { BoardState } from "../board-state";
 
-import type { BoardState, Coordinate } from "../board-state";
+import type { Coordinate } from "../board-state";
 
 export default function Board() {
   const rows = 9;
@@ -20,11 +13,11 @@ export default function Board() {
   const revealCells = (cells: Coordinate[]) => {
     updateBoard((board: BoardState) => {
       let nextRevealed: Coordinate[] = [];
-      const newBoard = cloneBoard(board);
+      const newBoard = board.clone();
 
       cells.forEach((coordinates) => {
         const [row, column] = coordinates;
-        nextRevealed = nextRevealed.concat(reveal(newBoard, row, column));
+        nextRevealed = nextRevealed.concat(newBoard.reveal(row, column));
       });
 
       if (nextRevealed.length > 0) {
@@ -38,7 +31,7 @@ export default function Board() {
   };
 
   const [board, updateBoard] = useState(
-    createInitialBoard(rows, columns, bombs)
+    BoardState.createInitialBoard(rows, columns, bombs)
   );
 
   const onClick = (button: string, row: number, column: number) => {
@@ -46,16 +39,16 @@ export default function Board() {
       revealCells([[row, column]]);
     } else {
       updateBoard((board) => {
-        return flag(board, row, column);
+        return board.flag(row, column);
       });
     }
   };
 
   let message: string;
 
-  if (gameLost(board)) {
+  if (board.gameLost()) {
     message = "Sorry, you lost.";
-  } else if (gameWon(board)) {
+  } else if (board.gameWon()) {
     message = "Hurray, you won!";
   } else {
     message = "Best of luck!";
@@ -66,7 +59,7 @@ export default function Board() {
       <p>{message}</p>
       <table className="board">
         <tbody>
-          {board.map((row, rowIndex) => (
+          {board.rows.map((row, rowIndex) => (
             <Row
               row={row}
               key={rowIndex}
