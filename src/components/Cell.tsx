@@ -2,20 +2,19 @@ import { CellData, Coordinate } from "../board-state";
 
 type CellProps = {
   state: CellData;
-  rowIndex: number;
-  columnIndex: number;
+  coordinate: Coordinate,
   onClick: Function
 };
 
 export default function Cell(props: CellProps) {
-  const { state, rowIndex: row, columnIndex: column, onClick } = props;
+  const { state, coordinate, onClick } = props;
 
   const clickHandler = (event: React.MouseEvent) => {
     event.preventDefault();
 
     const button = event.type === "click" ? "left" : "right";
 
-    onClick(button, new Coordinate(row, column));
+    onClick(button, coordinate);
   };
 
   let cellClass = "";

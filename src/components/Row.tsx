@@ -1,6 +1,6 @@
 import Cell from "./Cell";
 
-import type { RowData } from "../board-state";
+import { Coordinate, RowData } from "../board-state";
 
 type RowProps = {
   row: RowData;
@@ -17,8 +17,7 @@ export default function Row(props: RowProps) {
         <Cell
           state={cell}
           key={columnIndex}
-          rowIndex={rowIndex}
-          columnIndex={columnIndex}
+          coordinate={new Coordinate(rowIndex, columnIndex)}
           onClick={onClick}
         />
       ))}
