@@ -51,10 +51,19 @@ export default function Board() {
     }
   };
 
+  let message: string;
+
+  if (gameLost(board)) {
+    message = "Sorry, you lost.";
+  } else if (gameWon(board)) {
+    message = "Hurray, you won!";
+  } else {
+    message = "Best of luck!";
+  }
+
   return (
     <>
-      {gameLost(board) && <p>Sorry, you lost.</p>}
-      {gameWon(board) && <p>Hurray, you won!</p>}
+      <p>{message}</p>
       <table className="board">
         <tbody>
           {board.map((row, rowIndex) => (
