@@ -77,34 +77,6 @@ export class BoardState {
     return newBoard;
   }
 
-  gameLost() {
-    let lost = false;
-
-    this.rows.forEach((row) => {
-      row.forEach((cell) => {
-        if (cell.bomb && cell.revealed) {
-          lost = true;
-        }
-      });
-    });
-
-    return lost;
-  }
-
-  gameWon() {
-    let won = true;
-
-    this.rows.forEach((row) => {
-      row.forEach((cell) => {
-        if (!cell.revealed && !cell.bomb) {
-          won = false;
-        }
-      });
-    });
-
-    return won;
-  }
-
   reveal(coordinate: Coordinate): Coordinate[] {
     const cell = this.rows[coordinate.row][coordinate.column];
     cell.revealed = true;
@@ -112,13 +84,25 @@ export class BoardState {
 
     if (!cell.bomb && cell.adjacentBombs === 0) {
       this.adjacentCells(coordinate).forEach((adjacentCoordinate) => {
-        if (!this.rows[adjacentCoordinate.row][adjacentCoordinate.column].revealed) {
+        if (
+          !this.rows[adjacentCoordinate.row][adjacentCoordinate.column].revealed
+        ) {
           nextRevealed.push(adjacentCoordinate);
         }
       });
     }
 
     return nextRevealed;
+  }
+
+  state() {
+    if (this.gameLost()) {
+      return "lost";
+    } else if (this.gameWon()) {
+      return "won";
+    } else {
+      return "in progress";
+    }
   }
 
   private addRandomBomb() {
@@ -168,6 +152,34 @@ export class BoardState {
     );
 
     return adjacentCells;
+  }
+
+  private gameLost() {
+    let lost = false;
+
+    this.rows.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell.bomb && cell.revealed) {
+          lost = true;
+        }
+      });
+    });
+
+    return lost;
+  }
+
+  private gameWon() {
+    let won = true;
+
+    this.rows.forEach((row) => {
+      row.forEach((cell) => {
+        if (!cell.revealed && !cell.bomb) {
+          won = false;
+        }
+      });
+    });
+
+    return won;
   }
 
   private inBounds(coordinate: Coordinate) {

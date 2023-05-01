@@ -43,9 +43,9 @@ export default function Board() {
 
   let message: string;
 
-  if (board.gameLost()) {
+  if (board.state() === "lost") {
     message = "Sorry, you lost.";
-  } else if (board.gameWon()) {
+  } else if (board.state() === "won") {
     message = "Hurray, you won!";
   } else {
     message = "Best of luck!";
