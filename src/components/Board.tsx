@@ -1,9 +1,7 @@
 import { useState } from "react";
 
 import Row from "./Row";
-import { BoardState } from "../board-state";
-
-import type { Coordinate } from "../board-state";
+import { BoardState, Coordinate } from "../board-state";
 
 export default function Board() {
   const rows = 9;
@@ -15,9 +13,8 @@ export default function Board() {
       let nextRevealed: Coordinate[] = [];
       const newBoard = board.clone();
 
-      cells.forEach((coordinates) => {
-        const [row, column] = coordinates;
-        nextRevealed = nextRevealed.concat(newBoard.reveal(row, column));
+      cells.forEach((coordinate) => {
+        nextRevealed = nextRevealed.concat(newBoard.reveal(coordinate));
       });
 
       if (nextRevealed.length > 0) {
@@ -34,12 +31,12 @@ export default function Board() {
     BoardState.createInitialBoard(rows, columns, bombs)
   );
 
-  const onClick = (button: string, row: number, column: number) => {
+  const onClick = (button: string, coordinate: Coordinate) => {
     if (button === "left") {
-      revealCells([[row, column]]);
+      revealCells([coordinate]);
     } else {
       updateBoard((board) => {
-        return board.flag(row, column);
+        return board.flag(coordinate);
       });
     }
   };

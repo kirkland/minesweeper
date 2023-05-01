@@ -6,7 +6,16 @@ export type CellData = {
 };
 
 export type RowData = Array<CellData>;
-export type Coordinate = Array<number>;
+
+export class Coordinate {
+  row: number;
+  column: number;
+
+  constructor(row: number, column: number) {
+    this.row = row;
+    this.column = column;
+  }
+}
 
 export class BoardState {
   rows: RowData[];
@@ -61,10 +70,10 @@ export class BoardState {
     return new BoardState(newRows);
   }
 
-  flag(rowIndex: number, columnIndex: number) {
+  flag(coordinate: Coordinate) {
     const newBoard = this.clone();
-    newBoard.rows[rowIndex][columnIndex].flagged =
-      !newBoard.rows[rowIndex][columnIndex].flagged;
+    newBoard.rows[coordinate.row][coordinate.column].flagged =
+      !newBoard.rows[coordinate.row][coordinate.column].flagged;
     return newBoard;
   }
 
@@ -96,15 +105,15 @@ export class BoardState {
     return won;
   }
 
-  reveal(rowIndex: number, columnIndex: number): Coordinate[] {
-    const cell = this.rows[rowIndex][columnIndex];
+  reveal(coordinate: Coordinate): Coordinate[] {
+    const cell = this.rows[coordinate.row][coordinate.column];
     cell.revealed = true;
     const nextRevealed: Coordinate[] = [];
 
     if (!cell.bomb && cell.adjacentBombs === 0) {
-      this.adjacentCells(rowIndex, columnIndex).forEach((coordinates) => {
-        if (!this.rows[coordinates[0]][coordinates[1]].revealed) {
-          nextRevealed.push(coordinates);
+      this.adjacentCells(coordinate).forEach((adjacentCoordinate) => {
+        if (!this.rows[adjacentCoordinate.row][adjacentCoordinate.column].revealed) {
+          nextRevealed.push(adjacentCoordinate);
         }
       });
     }
@@ -125,10 +134,10 @@ export class BoardState {
       }
     }
 
-    this.setAdjacentBombs(bombRow, bombColumn);
+    this.setAdjacentBombs(new Coordinate(bombRow, bombColumn));
   }
 
-  private adjacentCells(row: number, column: number) {
+  private adjacentCells(coordinate: Coordinate) {
     const adjacentCellsIncludingNull: Array<Coordinate | null> = [
       [1, 1],
       [1, 0],
@@ -140,19 +149,17 @@ export class BoardState {
       [-1, -1],
     ].map((offsets) => {
       const [rowOffset, columnOffset] = offsets;
-      const adjacentRow = row + rowOffset;
-      const adjacentColumn = column + columnOffset;
 
-      if (
-        0 <= adjacentRow &&
-        adjacentRow < this.rowsCount &&
-        0 <= adjacentColumn &&
-        adjacentColumn < this.columnsCount
-      ) {
-        return [adjacentRow, adjacentColumn];
+      const adjacentCoordinate = new Coordinate(
+        coordinate.row + rowOffset,
+        coordinate.column + columnOffset
+      );
+
+      if (this.inBounds(adjacentCoordinate)) {
+        return adjacentCoordinate;
+      } else {
+        return null;
       }
-
-      return null;
     });
 
     const adjacentCells: Array<Coordinate> = adjacentCellsIncludingNull.filter(
@@ -163,10 +170,19 @@ export class BoardState {
     return adjacentCells;
   }
 
-  private setAdjacentBombs(bombRow: number, bombColumn: number) {
-    this.adjacentCells(bombRow, bombColumn).forEach((coordinates) => {
-      this.rows[coordinates[0]][coordinates[1]].adjacentBombs =
-        this.rows[coordinates[0]][coordinates[1]].adjacentBombs + 1;
+  private inBounds(coordinate: Coordinate) {
+    return (
+      coordinate.row >= 0 &&
+      coordinate.row < this.rowsCount &&
+      coordinate.column >= 0 &&
+      coordinate.column < this.columnsCount
+    );
+  }
+
+  private setAdjacentBombs(bombCoordinate: Coordinate) {
+    this.adjacentCells(bombCoordinate).forEach((coordinate) => {
+      this.rows[coordinate.row][coordinate.column].adjacentBombs =
+        this.rows[coordinate.row][coordinate.column].adjacentBombs + 1;
     });
   }
 }

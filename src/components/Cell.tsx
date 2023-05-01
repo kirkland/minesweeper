@@ -1,4 +1,4 @@
-import type { CellData } from "../board-state";
+import { CellData, Coordinate } from "../board-state";
 
 type CellProps = {
   state: CellData;
@@ -15,7 +15,7 @@ export default function Cell(props: CellProps) {
 
     const button = event.type === "click" ? "left" : "right";
 
-    onClick(button, row, column);
+    onClick(button, new Coordinate(row, column));
   };
 
   let cellClass = "";
