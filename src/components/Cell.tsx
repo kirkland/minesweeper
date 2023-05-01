@@ -1,7 +1,16 @@
-export default function Cell(props) {
-  const { state, row, column, onClick } = props;
+import type { CellData } from "../board-state";
 
-  const clickHandler = (event) => {
+type CellProps = {
+  state: CellData;
+  rowIndex: number;
+  columnIndex: number;
+  onClick: Function
+};
+
+export default function Cell(props: CellProps) {
+  const { state, rowIndex: row, columnIndex: column, onClick } = props;
+
+  const clickHandler = (event: React.MouseEvent) => {
     event.preventDefault();
 
     const button = event.type === "click" ? "left" : "right";

@@ -10,14 +10,16 @@ import {
   reveal,
 } from "../board-state";
 
-export default function Board(props) {
+import type { BoardState, Coordinate } from "../board-state";
+
+export default function Board() {
   const rows = 9;
   const columns = 9;
   const bombs = 10;
 
-  const revealCells = (cells) => {
-    updateBoard((board) => {
-      let nextRevealed = [];
+  const revealCells = (cells: Coordinate[]) => {
+    updateBoard((board: BoardState) => {
+      let nextRevealed: Coordinate[] = [];
       const newBoard = cloneBoard(board);
 
       cells.forEach((coordinates) => {
@@ -39,7 +41,7 @@ export default function Board(props) {
     createInitialBoard(rows, columns, bombs)
   );
 
-  const onClick = (button, row, column) => {
+  const onClick = (button: string, row: number, column: number) => {
     if (button === "left") {
       revealCells([[row, column]]);
     } else {

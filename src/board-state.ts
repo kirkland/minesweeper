@@ -1,8 +1,23 @@
-const adjacentCells = (board, row, column) => {
+export type CellData = {
+  adjacentBombs: number;
+  bomb?: boolean;
+  flagged?: boolean;
+  revealed: boolean;
+};
+
+export type RowData = Array<CellData>;
+export type BoardState = Array<RowData>;
+export type Coordinate = Array<number>;
+
+const adjacentCells = (
+  board: BoardState,
+  row: number,
+  column: number
+): Array<Coordinate> => {
   const rows = board.length;
   const columns = board[0].length;
 
-  return [
+  const adjacentCellsIncludingNull: Array<Coordinate | null> = [
     [1, 1],
     [1, 0],
     [1, -1],
@@ -11,31 +26,35 @@ const adjacentCells = (board, row, column) => {
     [-1, 1],
     [-1, 0],
     [-1, -1],
-  ]
-    .map((offsets) => {
-      const [rowOffset, columnOffset] = offsets;
-      const adjacentRow = row + rowOffset;
-      const adjacentColumn = column + columnOffset;
+  ].map((offsets) => {
+    const [rowOffset, columnOffset] = offsets;
+    const adjacentRow = row + rowOffset;
+    const adjacentColumn = column + columnOffset;
 
-      if (
-        0 <= adjacentRow &&
-        adjacentRow < rows &&
-        0 <= adjacentColumn &&
-        adjacentColumn < columns
-      ) {
-        return [adjacentRow, adjacentColumn];
-      }
+    if (
+      0 <= adjacentRow &&
+      adjacentRow < rows &&
+      0 <= adjacentColumn &&
+      adjacentColumn < columns
+    ) {
+      return [adjacentRow, adjacentColumn];
+    }
 
-      return null;
-    })
-    .filter((x) => x);
+    return null;
+  });
+
+  const adjacentCells: Array<Coordinate> = adjacentCellsIncludingNull.filter(
+    (coordinate): coordinate is Exclude<typeof coordinate, null> => !!coordinate
+  );
+
+  return adjacentCells;
 };
 
-export const cloneBoard = (board) => {
-  const newBoard = [];
+export const cloneBoard = (board: BoardState) => {
+  const newBoard: BoardState = [];
 
   board.forEach((row) => {
-    const newRow = [];
+    const newRow: RowData = [];
 
     row.forEach((cell) => {
       newRow.push(Object.assign({}, cell));
@@ -47,11 +66,15 @@ export const cloneBoard = (board) => {
   return newBoard;
 };
 
-export const createInitialBoard = (rowsCount, columnsCount, bombs) => {
-  const board = [];
+export const createInitialBoard = (
+  rowsCount: number,
+  columnsCount: number,
+  bombs: number
+) => {
+  const board: BoardState = [];
 
   for (let rowIndex = 0; rowIndex < rowsCount; rowIndex++) {
-    const row = [];
+    const row: RowData = [];
 
     for (let columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
       row.push({ adjacentBombs: 0, revealed: false });
@@ -70,7 +93,7 @@ export const createInitialBoard = (rowsCount, columnsCount, bombs) => {
 
       if (!board[bombRow][bombColumn].bomb) {
         board[bombRow][bombColumn].bomb = true;
-        break
+        break;
       }
     }
 
@@ -80,7 +103,7 @@ export const createInitialBoard = (rowsCount, columnsCount, bombs) => {
   return board;
 };
 
-export const gameLost = (board) => {
+export const gameLost = (board: BoardState) => {
   let lost = false;
 
   board.forEach((row) => {
@@ -94,7 +117,7 @@ export const gameLost = (board) => {
   return lost;
 };
 
-export const gameWon = (board) => {
+export const gameWon = (board: BoardState) => {
   let won = true;
 
   board.forEach((row) => {
@@ -108,16 +131,21 @@ export const gameWon = (board) => {
   return won;
 };
 
-export const flag = (board, row, column) => {
+export const flag = (board: BoardState, row: number, column: number) => {
   const newBoard = cloneBoard(board);
   newBoard[row][column].flagged = !newBoard[row][column].flagged;
   return newBoard;
 };
 
-export const reveal = (newBoard, row, column, clone = true) => {
+export const reveal = (
+  newBoard: BoardState,
+  row: number,
+  column: number,
+  clone = true
+): Coordinate[] => {
   const cell = newBoard[row][column];
   cell.revealed = true;
-  const nextRevealed = [];
+  const nextRevealed: Coordinate[] = [];
 
   if (!cell.bomb && cell.adjacentBombs === 0) {
     adjacentCells(newBoard, row, column).forEach((coordinates) => {
@@ -130,7 +158,11 @@ export const reveal = (newBoard, row, column, clone = true) => {
   return nextRevealed;
 };
 
-const setAdjacentBombs = (board, bombRow, bombColumn) => {
+const setAdjacentBombs = (
+  board: BoardState,
+  bombRow: number,
+  bombColumn: number
+) => {
   adjacentCells(board, bombRow, bombColumn).forEach((coordinates) => {
     board[coordinates[0]][coordinates[1]].adjacentBombs =
       board[coordinates[0]][coordinates[1]].adjacentBombs + 1;
