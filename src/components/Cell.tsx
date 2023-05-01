@@ -2,8 +2,8 @@ import { CellData, Coordinate } from "../board-state";
 
 type CellProps = {
   state: CellData;
-  coordinate: Coordinate,
-  onClick: Function
+  coordinate: Coordinate;
+  onClick: (button: string, coordinate: Coordinate) => void;
 };
 
 export default function Cell(props: CellProps) {

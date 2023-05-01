@@ -5,7 +5,7 @@ import { Coordinate, RowData } from "../board-state";
 type RowProps = {
   row: RowData;
   rowIndex: number;
-  onClick: Function
+  onClick: (button: string, coordinate: Coordinate) => void;
 };
 
 export default function Row(props: RowProps) {
