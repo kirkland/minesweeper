@@ -1,5 +1,7 @@
 import { ReactElement } from "react";
 import { CellData, Coordinate } from "../board-state";
+import bomb from "../assets/images/bomb.png"
+import flag from "../assets/images/flag.png"
 
 type CellProps = {
   state: CellData;
@@ -23,7 +25,7 @@ export default function Cell(props: CellProps) {
 
   if (state.flagged) {
     cellClass = "cell-flagged";
-    content = <img src="/public/flag.png" />
+    content = <img src={flag} />
   }
 
   if (state.revealed) {
@@ -32,7 +34,7 @@ export default function Cell(props: CellProps) {
 
     if (state.bomb) {
       cellClass += " cell-revealed-bomb";
-      content = <img src="/public/bomb.png" />
+      content = <img src={bomb} />
     }
   }
 

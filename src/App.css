@@ -49,6 +49,11 @@ td.cell-revealed-bomb .content-holder {
   background-color: aquamarine;
 }
 
+.content-holder img {
+  width: 100%;
+  height: 100%;
+}
+
 @keyframes slidein {
   from {
     top: -40px;
