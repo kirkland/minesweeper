@@ -63,3 +63,12 @@ td.cell-revealed-bomb .content-holder {
     top: 0px;
   }
 }
+
+button#new-game {
+  background-color: aquamarine;
+  display: block;
+  height: 40px;
+  margin: auto;
+  margin-bottom: 5px;
+  width: 150px;
+}

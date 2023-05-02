@@ -27,6 +27,10 @@ export default function Board() {
     });
   };
 
+  const startNewGame = () => {
+    updateBoard(GameState.createInitialBoard(rows, columns, bombs));
+  };
+
   const [board, updateBoard] = useState(
     GameState.createInitialBoard(rows, columns, bombs)
   );
@@ -54,6 +58,9 @@ export default function Board() {
   return (
     <>
       <p>{message}</p>
+      <button id="new-game" onClick={startNewGame}>
+        New Game
+      </button>
       <table className="board">
         <tbody>
           {board.rows.map((row, rowIndex) => (
