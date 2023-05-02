@@ -54,6 +54,29 @@ export class GameState {
     return board;
   }
 
+  bombsRemaining() {
+    let bombsCount = 0;
+    let flagCount = 0;
+
+    for (let rowIndex = 0; rowIndex < this.rowsCount; rowIndex++) {
+      for (
+        let columnIndex = 0;
+        columnIndex < this.columnsCount;
+        columnIndex++
+      ) {
+        if (this.rows[rowIndex][columnIndex].flagged) {
+          flagCount += 1;
+        }
+
+        if (this.rows[rowIndex][columnIndex].bomb) {
+          bombsCount += 1;
+        }
+      }
+    }
+
+    return bombsCount - flagCount;
+  }
+
   clone() {
     const newRows: Array<RowData> = [];
 

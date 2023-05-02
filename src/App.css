@@ -64,6 +64,24 @@ td.cell-revealed-bomb .content-holder {
   }
 }
 
+#game-status {
+  display: flex;
+}
+
+#bombs-remaining-container {
+  width: 20%;
+}
+
+#bombs-remaining {
+  font-size: 24px;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+#new-game-container {
+  width: 60%;
+}
+
 button#new-game {
   background-color: aquamarine;
   display: block;

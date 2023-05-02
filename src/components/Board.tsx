@@ -62,9 +62,16 @@ export default function Board() {
   return (
     <>
       <p>{message}</p>
-      <button id="new-game" onClick={startNewGame}>
-        New Game
-      </button>
+      <div id="game-status">
+        <div id="bombs-remaining-container">
+          <div id="bombs-remaining">{board.bombsRemaining()}</div>
+        </div>
+        <div id="new-game-container">
+          <button id="new-game" onClick={startNewGame}>
+            New Game
+          </button>
+        </div>
+      </div>
       <table className="board">
         <tbody>
           {board.rows.map((row, rowIndex) => (
