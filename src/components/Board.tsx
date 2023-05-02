@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Row from "./Row";
-import { BoardState, Coordinate } from "../board-state";
+import { GameState, Coordinate } from "../game-state";
 
 export default function Board() {
   const rows = 9;
@@ -9,7 +9,7 @@ export default function Board() {
   const bombs = 10;
 
   const revealCells = (cells: Coordinate[]) => {
-    updateBoard((board: BoardState) => {
+    updateBoard((board: GameState) => {
       let nextRevealed: Coordinate[] = [];
       const newBoard = board.clone();
 
@@ -28,7 +28,7 @@ export default function Board() {
   };
 
   const [board, updateBoard] = useState(
-    BoardState.createInitialBoard(rows, columns, bombs)
+    GameState.createInitialBoard(rows, columns, bombs)
   );
 
   const onClick = (button: string, coordinate: Coordinate) => {

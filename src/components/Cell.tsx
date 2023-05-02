@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { CellData, Coordinate } from "../board-state";
+import { CellData, Coordinate } from "../game-state";
 import bomb from "../assets/images/bomb.png"
 import flag from "../assets/images/flag.png"
 

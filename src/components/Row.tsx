@@ -1,6 +1,6 @@
 import Cell from "./Cell";
 
-import { Coordinate, RowData } from "../board-state";
+import { Coordinate, RowData } from "../game-state";
 
 type RowProps = {
   row: RowData;

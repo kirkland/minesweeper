@@ -17,7 +17,7 @@ export class Coordinate {
   }
 }
 
-export class BoardState {
+export class GameState {
   rows: RowData[];
   private rowsCount: number;
   private columnsCount: number;
@@ -45,7 +45,7 @@ export class BoardState {
       rows.push(row);
     }
 
-    const board = new BoardState(rows);
+    const board = new GameState(rows);
 
     for (let i = 0; i < bombs; i++) {
       board.addRandomBomb();
@@ -67,7 +67,7 @@ export class BoardState {
       newRows.push(newRow);
     });
 
-    return new BoardState(newRows);
+    return new GameState(newRows);
   }
 
   flag(coordinate: Coordinate) {
