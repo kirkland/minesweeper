@@ -36,6 +36,10 @@ export default function Board() {
   );
 
   const onClickCell = (button: string, coordinate: Coordinate) => {
+    if (board.state() !== "in progress") {
+      return;
+    }
+
     if (button === "left") {
       revealCells([coordinate]);
     } else {
