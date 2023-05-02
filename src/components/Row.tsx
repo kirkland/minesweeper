@@ -5,11 +5,11 @@ import { Coordinate, RowData } from "../game-state";
 type RowProps = {
   row: RowData;
   rowIndex: number;
-  onClick: (button: string, coordinate: Coordinate) => void;
+  onClickCell: (button: string, coordinate: Coordinate) => void;
 };
 
 export default function Row(props: RowProps) {
-  const { row, rowIndex, onClick } = props;
+  const { row, rowIndex, onClickCell } = props;
 
   return (
     <tr className="row">
@@ -18,7 +18,7 @@ export default function Row(props: RowProps) {
           state={cell}
           key={columnIndex}
           coordinate={new Coordinate(rowIndex, columnIndex)}
-          onClick={onClick}
+          onClickCell={onClickCell}
         />
       ))}
     </tr>

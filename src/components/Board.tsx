@@ -35,7 +35,7 @@ export default function Board() {
     GameState.createInitialBoard(rows, columns, bombs)
   );
 
-  const onClick = (button: string, coordinate: Coordinate) => {
+  const onClickCell = (button: string, coordinate: Coordinate) => {
     if (button === "left") {
       revealCells([coordinate]);
     } else {
@@ -68,7 +68,7 @@ export default function Board() {
               row={row}
               key={rowIndex}
               rowIndex={rowIndex}
-              onClick={onClick}
+              onClickCell={onClickCell}
             />
           ))}
         </tbody>

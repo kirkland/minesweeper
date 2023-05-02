@@ -6,18 +6,18 @@ import flag from "../assets/images/flag.png"
 type CellProps = {
   state: CellData;
   coordinate: Coordinate;
-  onClick: (button: string, coordinate: Coordinate) => void;
+  onClickCell: (button: string, coordinate: Coordinate) => void;
 };
 
 export default function Cell(props: CellProps) {
-  const { state, coordinate, onClick } = props;
+  const { state, coordinate, onClickCell } = props;
 
   const clickHandler = (event: React.MouseEvent) => {
     event.preventDefault();
 
     const button = event.type === "click" ? "left" : "right";
 
-    onClick(button, coordinate);
+    onClickCell(button, coordinate);
   };
 
   let cellClass = "";
