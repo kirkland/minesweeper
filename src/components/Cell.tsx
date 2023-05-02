@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 import { CellData, Coordinate } from "../board-state";
 
 type CellProps = {
@@ -18,16 +19,20 @@ export default function Cell(props: CellProps) {
   };
 
   let cellClass = "";
+  let content: ReactElement = <div />;
 
   if (state.flagged) {
     cellClass = "cell-flagged";
+    content = <img src="/public/flag.png" />
   }
 
   if (state.revealed) {
     cellClass = "cell-revealed";
+    content = <>{state.adjacentBombs}</>;
 
     if (state.bomb) {
       cellClass += " cell-revealed-bomb";
+      content = <img src="/public/bomb.png" />
     }
   }
 
@@ -38,7 +43,7 @@ export default function Cell(props: CellProps) {
       onContextMenu={clickHandler}
     >
       <div className="content-holder">
-        {state.revealed && state.adjacentBombs}
+        {content}
       </div>
     </td>
   );
