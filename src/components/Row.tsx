@@ -1,4 +1,5 @@
 import Cell from "./Cell";
+import styles from "./Row.module.css";
 
 import { Coordinate, RowData } from "../game-state";
 
@@ -12,7 +13,7 @@ export default function Row(props: RowProps) {
   const { row, rowIndex, onClickCell } = props;
 
   return (
-    <tr className="row">
+    <div className={styles.row}>
       {row.map((cell, columnIndex) => (
         <Cell
           state={cell}
@@ -21,6 +22,6 @@ export default function Row(props: RowProps) {
           onClickCell={onClickCell}
         />
       ))}
-    </tr>
+    </div>
   );
 }

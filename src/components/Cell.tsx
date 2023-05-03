@@ -38,15 +38,14 @@ export default function Cell(props: CellProps) {
       content = <img src={bomb} />;
     }
   }
-  
 
   return (
-    <td
+    <div
       className={cellClass}
       onClick={clickHandler}
       onContextMenu={clickHandler}
     >
       <div className={styles.contentHolder}>{content}</div>
-    </td>
+    </div>
   );
 }

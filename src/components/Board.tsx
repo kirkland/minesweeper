@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Row from "./Row";
+import styles from "./Board.module.css";
 import { GameState, Coordinate } from "../game-state";
 
 export default function Board() {
@@ -72,18 +73,17 @@ export default function Board() {
           </button>
         </div>
       </div>
-      <table className="board">
-        <tbody>
-          {board.rows.map((row, rowIndex) => (
-            <Row
-              row={row}
-              key={rowIndex}
-              rowIndex={rowIndex}
-              onClickCell={onClickCell}
-            />
-          ))}
-        </tbody>
-      </table>
+
+      <div className={styles.board}>
+        {board.rows.map((row, rowIndex) => (
+          <Row
+            row={row}
+            key={rowIndex}
+            rowIndex={rowIndex}
+            onClickCell={onClickCell}
+          />
+        ))}
+      </div>
     </>
   );
 }

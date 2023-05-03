@@ -4,14 +4,6 @@
   justify-content: center;
 }
 
-table.board {
-  border-collapse: collapse;
-}
-
-tr {
-  vertical-align: middle;
-}
-
 #game-status {
   display: flex;
 }
