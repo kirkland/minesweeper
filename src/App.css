@@ -12,58 +12,6 @@ tr {
   vertical-align: middle;
 }
 
-td.cell {
-  background-color: gray;
-  border: 1px rgb(48, 137, 121) solid;
-  font-size: 26px;
-  height: 40px;
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-  vertical-align: middle;
-  width: 40px;
-}
-
-td.cell-flagged {
-  background-color: aquamarine;
-}
-
-td .content-holder {
-  align-items: center;
-  display: flex;
-  height: 100%;
-  left: 0;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
-
-td.cell-revealed .content-holder {
-  animation-duration: 0.1s;
-  animation-name: slidein;
-  background-color: lightgray;
-}
-
-td.cell-revealed-bomb .content-holder {
-  background-color: aquamarine;
-}
-
-.content-holder img {
-  width: 100%;
-  height: 100%;
-}
-
-@keyframes slidein {
-  from {
-    top: -40px;
-  }
-
-  to {
-    top: 0px;
-  }
-}
-
 #game-status {
   display: flex;
 }

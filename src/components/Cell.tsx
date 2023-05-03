@@ -1,7 +1,8 @@
 import { ReactElement } from "react";
 import { CellData, Coordinate } from "../game-state";
-import bomb from "../assets/images/bomb.png"
-import flag from "../assets/images/flag.png"
+import bomb from "../assets/images/bomb.png";
+import flag from "../assets/images/flag.png";
+import styles from "./Cell.module.css";
 
 type CellProps = {
   state: CellData;
@@ -20,33 +21,32 @@ export default function Cell(props: CellProps) {
     onClickCell(button, coordinate);
   };
 
-  let cellClass = "";
+  let cellClass = `${styles.cell} `;
   let content: ReactElement = <div />;
 
   if (state.flagged) {
-    cellClass = "cell-flagged";
-    content = <img src={flag} />
+    cellClass += styles.cellFlagged;
+    content = <img src={flag} />;
   }
 
   if (state.revealed) {
-    cellClass = "cell-revealed";
+    cellClass += `${styles.cellRevealed} `;
     content = <>{state.adjacentBombs}</>;
 
     if (state.bomb) {
-      cellClass += " cell-revealed-bomb";
-      content = <img src={bomb} />
+      cellClass += styles.cellRevealedBomb;
+      content = <img src={bomb} />;
     }
   }
+  
 
   return (
     <td
-      className={`cell ${cellClass}`}
+      className={cellClass}
       onClick={clickHandler}
       onContextMenu={clickHandler}
     >
-      <div className="content-holder">
-        {content}
-      </div>
+      <div className={styles.contentHolder}>{content}</div>
     </td>
   );
 }
