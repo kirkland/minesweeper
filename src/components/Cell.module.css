@@ -1,13 +1,11 @@
 .cell {
+  aspect-ratio: 1/1;
   background-color: gray;
   border: 1px rgb(48, 137, 121) solid;
+  flex-grow: 1;
   font-size: 26px;
-  height: 40px;
   overflow: hidden;
   position: relative;
-  text-align: center;
-  vertical-align: middle;
-  width: 40px;
 }
 
 .cellFlagged {

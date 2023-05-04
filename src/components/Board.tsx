@@ -61,29 +61,40 @@ export default function Board() {
   }
 
   return (
-    <>
-      <p>{message}</p>
-      <div id="game-status">
-        <div id="bombs-remaining-container">
-          <div id="bombs-remaining">{board.bombsRemaining()}</div>
-        </div>
-        <div id="new-game-container">
-          <button id="new-game" onClick={startNewGame}>
-            New Game
-          </button>
-        </div>
-      </div>
+    // <>
+    //   <p>{message}</p>
+    //   <div id="game-status">
+    //     <div id="bombs-remaining-container">
+    //       <div id="bombs-remaining">{board.bombsRemaining()}</div>
+    //     </div>
+    //     <div id="new-game-container">
+    //       <button id="new-game" onClick={startNewGame}>
+    //         New Game
+    //       </button>
+    //     </div>
+    //   </div>
 
-      <div className={styles.board}>
-        {board.rows.map((row, rowIndex) => (
-          <Row
-            row={row}
-            key={rowIndex}
-            rowIndex={rowIndex}
-            onClickCell={onClickCell}
-          />
-        ))}
-      </div>
-    </>
+    //   <div className={styles.board}>
+    //     {board.rows.map((row, rowIndex) => (
+    //       <Row
+    //         row={row}
+    //         key={rowIndex}
+    //         rowIndex={rowIndex}
+    //         onClickCell={onClickCell}
+    //       />
+    //     ))}
+    //   </div>
+    // </>
+
+    <div className={styles.board}>
+      {board.rows.map((row, rowIndex) => (
+        <Row
+          row={row}
+          key={rowIndex}
+          rowIndex={rowIndex}
+          onClickCell={onClickCell}
+        />
+      ))}
+    </div>
   );
 }
