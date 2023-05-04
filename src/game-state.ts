@@ -94,6 +94,12 @@ export class GameState {
   }
 
   flag(coordinate: Coordinate) {
+    const cell = this.rows[coordinate.row][coordinate.column];
+
+    if (cell.revealed) {
+      return this;
+    }
+
     const newBoard = this.clone();
     newBoard.rows[coordinate.row][coordinate.column].flagged =
       !newBoard.rows[coordinate.row][coordinate.column].flagged;
@@ -102,6 +108,12 @@ export class GameState {
 
   reveal(coordinate: Coordinate): Coordinate[] {
     const cell = this.rows[coordinate.row][coordinate.column];
+
+    // Do nothing if the cell is already revealed or flagged
+    if (cell.revealed || cell.flagged) {
+      return [];
+    }
+
     cell.revealed = true;
     const nextRevealed: Coordinate[] = [];
 
