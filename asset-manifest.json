@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/minesweeper/static/css/main.975f7655.css",
-    "main.js": "/minesweeper/static/js/main.8120a373.js",
+    "main.css": "/minesweeper/static/css/main.b2c71fae.css",
+    "main.js": "/minesweeper/static/js/main.3536425c.js",
     "static/js/787.e867dfcb.chunk.js": "/minesweeper/static/js/787.e867dfcb.chunk.js",
     "static/media/flag.png": "/minesweeper/static/media/flag.8e3f89ffb0176f16fbbf.png",
     "static/media/bomb.png": "/minesweeper/static/media/bomb.3c702b0af09239006400.png",
     "index.html": "/minesweeper/index.html",
-    "main.975f7655.css.map": "/minesweeper/static/css/main.975f7655.css.map",
-    "main.8120a373.js.map": "/minesweeper/static/js/main.8120a373.js.map",
+    "main.b2c71fae.css.map": "/minesweeper/static/css/main.b2c71fae.css.map",
+    "main.3536425c.js.map": "/minesweeper/static/js/main.3536425c.js.map",
     "787.e867dfcb.chunk.js.map": "/minesweeper/static/js/787.e867dfcb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.975f7655.css",
-    "static/js/main.8120a373.js"
+    "static/css/main.b2c71fae.css",
+    "static/js/main.3536425c.js"
   ]
 }
