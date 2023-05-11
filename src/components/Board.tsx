@@ -4,7 +4,7 @@ import { GameState, Coordinate } from "../game-state";
 
 type BoardProps = {
   board: GameState;
-  onClickCell: (button: string, coordinate: Coordinate) => void;
+  onClickCell: (action: string, coordinate: Coordinate) => void;
 };
 
 export default function Board(props: BoardProps) {

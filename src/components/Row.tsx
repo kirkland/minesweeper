@@ -6,7 +6,7 @@ import { Coordinate, RowData } from "../game-state";
 type RowProps = {
   row: RowData;
   rowIndex: number;
-  onClickCell: (button: string, coordinate: Coordinate) => void;
+  onClickCell: (action: string, coordinate: Coordinate) => void;
 };
 
 export default function Row(props: RowProps) {

@@ -10,12 +10,12 @@ export default function Game() {
   const columns = 9;
   const bombs = 10;
 
-  const onClickCell = (button: string, coordinate: Coordinate) => {
+  const onClickCell = (action: string, coordinate: Coordinate) => {
     if (board.state() !== "in progress") {
       return;
     }
 
-    if (button === "left") {
+    if (action === "reveal") {
       revealCells([coordinate]);
     } else {
       updateBoard((board) => {
