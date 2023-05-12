@@ -17,7 +17,7 @@ export default function Game() {
 
     if (action === "reveal") {
       revealCells([coordinate]);
-    } else {
+    } else if (action === "flag") {
       updateBoard((board) => {
         return board.flag(coordinate);
       });

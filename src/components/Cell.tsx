@@ -21,9 +21,10 @@ export default function Cell(props: CellProps) {
   const [touching, setTouching] = useState(false);
   const [touchAction, setTouchAction] = useState("reveal");
 
-  const clickHandler = (event: React.MouseEvent) => {
+  const rightClickHandler = (event: React.MouseEvent) => {
     event.preventDefault();
 
+    // Long press on mouse or mobile; do not interrupt
     if (touching) {
       return;
     }
@@ -33,56 +34,47 @@ export default function Cell(props: CellProps) {
     onClickCell(action, coordinate);
   };
 
+  const resetTouchState = () => {
+    clearTimeout(timerRef.current);
+    setTouching(false);
+    setTouchAction("reveal");
+  };
+
   const startPressTimer = () => {
     timerRef.current = setTimeout(() => {
       setTouchAction("flag");
     }, 300);
   };
 
-  const touchStartHandler = (event: React.TouchEvent) => {
-    startPressTimer();
-    setTouching(true);
-  };
+  const pointerDownHandler = (event: React.PointerEvent) => {
+    // This indicates a mouse right click
+    if (event.button === 2) {
+      return;
+    }
 
-  const touchWithinCell = (event: React.TouchEvent) => {
-    if (cellRef.current) {
-      const touch = event.changedTouches[0];
-
-      const touchX = touch.pageX;
-      const touchY = touch.pageY;
-
-      const cellLeftBoundary = cellRef.current.offsetLeft;
-      const cellRightBoundary = cellLeftBoundary + cellRef.current.offsetWidth;
-      const cellTopBoundary = cellRef.current.offsetTop;
-      const cellBottomBoundary = cellTopBoundary + cellRef.current.offsetHeight;
-
-      return !(
-        cellLeftBoundary <= touchX &&
-        touchX <= cellRightBoundary &&
-        cellTopBoundary <= touchY &&
-        touchY <= cellBottomBoundary
-      );
+    if (event.isPrimary) {
+      startPressTimer();
+      setTouching(true);
     }
   };
 
-  // If user has moved outside of the cell, do not take any actions on end touch
-  const touchMoveHandler = (event: React.TouchEvent) => {
-    if (!touchWithinCell(event)) {
-      setTouching(false);
-    }
-  };
-
-  const touchEndHandler = (event: React.TouchEvent) => {
+  const pointerUpHandler = (event: React.PointerEvent) => {
     event.preventDefault();
-    clearTimeout(timerRef.current);
 
-    // touching will have been set to false if user dragged their finger outside of the cell
+    // touching will have been set to false if user dragged the pointer outside of the cell
     if (touching) {
-      setTouching(false);
       onClickCell(touchAction, coordinate);
     }
 
-    setTouchAction("click");
+    resetTouchState();
+  };
+
+  const pointerLeaveHandler = (event: React.PointerEvent) => {
+    setTouching(false);
+  };
+
+  const pointerCancelHandler = (event: React.PointerEvent) => {
+    resetTouchState();
   };
 
   let cellClass = `${styles.cell} `;
@@ -100,17 +92,17 @@ export default function Cell(props: CellProps) {
       content = <img alt="bomb" src={bomb} />;
     }
   } else if (touching && touchAction === "flag") {
-    cellClass += `${styles.cellFlagging}`
+    cellClass += `${styles.cellFlagging}`;
   }
 
   return (
     <div
       className={cellClass}
-      onClick={clickHandler}
-      onContextMenu={clickHandler}
-      onTouchStart={touchStartHandler}
-      onTouchEnd={touchEndHandler}
-      onTouchMove={touchMoveHandler}
+      onContextMenu={rightClickHandler}
+      onPointerDown={pointerDownHandler}
+      onPointerUp={pointerUpHandler}
+      onPointerLeave={pointerLeaveHandler}
+      onPointerCancel={pointerCancelHandler}
       ref={cellRef}
     >
       <div className={styles.contentHolder}>{content}</div>
