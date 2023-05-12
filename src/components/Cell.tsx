@@ -77,11 +77,6 @@ export default function Cell(props: CellProps) {
     resetTouchState();
   };
 
-  const pointerMoveHandler = (event: React.PointerEvent) => {
-    // This is to prevent the user from selecting text
-    event.preventDefault();
-  };
-
   let cellClass = `${styles.cell} `;
   let content: ReactElement = <div />;
 
@@ -108,7 +103,6 @@ export default function Cell(props: CellProps) {
       onPointerUp={pointerUpHandler}
       onPointerLeave={pointerLeaveHandler}
       onPointerCancel={pointerCancelHandler}
-      onPointerMove={pointerMoveHandler}
       ref={cellRef}
     >
       <div className={styles.contentHolder}>{content}</div>
